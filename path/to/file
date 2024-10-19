@@ -1,0 +1,44 @@
+from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+from langchain_core.output_parsers import StrOutputParser
+
+# Define the model and parser
+model = ChatOpenAI()
+parser = StrOutputParser()
+
+# Create a prompt template
+system_template = "Translate the following into {language}:"
+prompt_template = ChatPromptTemplate.from_messages([
+    ("system", system_template),
+    ("user", "{text}")
+])
+
+# Create the chain
+chain = prompt_template | model | parser
+
+# Example usage
+result = chain.invoke({"language": "italian", "text": "hi"})
+print(result)  # Expected output: 'ciao'
+
+# For comparison, let's keep the original example
+messages = [
+    SystemMessage(content="Translate the following from English into French"),
+    HumanMessage(content="hi!"),
+]
+
+# Invoke the model and save the result
+result = model.invoke(messages)
+
+# Pass the result to the parser
+parsed_result = parser.invoke(result)
+
+print(parsed_result)  # Expected output: 'Bonjour!'
+
+# Chaining the model with the output parser
+chain = model | parser
+
+# Invoke the chain
+chained_result = chain.invoke(messages)
+
+print(chained_result)  # Expected output: 'Bonjour!'
