@@ -98,7 +98,7 @@
 		"playwright": "^1.44.1",
 		"postcss": "^8.4.31",
 		"saslprep": "^1.0.3",
-		"satori": "^0.10.11",
+		"satori": "^0.33.5",
 		"satori-html": "^0.3.2",
 		"sbd": "^1.0.19",
 		"serpapi": "^1.1.1",
